@@ -13,7 +13,11 @@ import java.lang.reflect.InvocationTargetException;
 @Controller
 public class RoverController {
 
-    private RoverService roverService;
+    private final RoverService roverService;
+
+    public RoverController(RoverService roverService) {
+        this.roverService = roverService;
+    }
 
     @GetMapping("/")
     public String getHomeView(ModelMap model, Long userId, Boolean createUser) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
