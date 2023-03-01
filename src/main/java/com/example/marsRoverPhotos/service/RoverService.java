@@ -1,9 +1,11 @@
 package com.example.marsRoverPhotos.service;
 
 import com.example.marsRoverPhotos.dto.RoverDTO;
+import com.example.marsRoverPhotos.repository.PreferencesRepository;
 import com.example.marsRoverPhotos.response.MarsPhoto;
 import com.example.marsRoverPhotos.response.MarsRoverApiResponse;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +20,9 @@ public class RoverService {
     private static final String API_KEY = "4KyyHycAvnywP1DvJgKWjnJ7kc18GCygZTf9MpNr";
 
     private Map<String, List<String>> validCameras = new HashMap<>();
+
+    @Autowired
+    private PreferencesRepository preferencesRepository;
 
     public RoverService() {
         validCameras.put("Opportunity", Arrays.asList("FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES"));
@@ -63,5 +68,13 @@ public class RoverService {
             }
         }
         return urls;
+    }
+
+    public RoverDTO save(RoverDTO roverDTO) {
+        return preferencesRepository.save(roverDTO);
+    }
+
+    public RoverDTO findByUserId(Long userId) {
+        return preferencesRepository.findByUserId(userId);
     }
 }

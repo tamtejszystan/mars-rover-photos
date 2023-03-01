@@ -1,9 +1,6 @@
 package com.example.marsRoverPhotos.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +10,7 @@ import lombok.Setter;
 public class RoverDTO {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    @Column(length = 20)
     private String roverType;
     private Integer marsSol;
     private Boolean cameraFhaz;
@@ -24,4 +22,5 @@ public class RoverDTO {
     private Boolean cameraNavcam;
     private Boolean cameraPancam;
     private Boolean cameraMinites;
+    private Boolean rememberPreferences;
 }
