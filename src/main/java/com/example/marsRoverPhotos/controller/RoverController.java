@@ -33,7 +33,7 @@ public class RoverController {
         }
         MarsRoverApiResponse roverData = roverService.getRoverData(roverDTO);
         model.put("roverData", roverData);
-        model.put("homeDto", roverDTO);
+        model.put("roverDTO", roverDTO);
         model.put("validCameras", roverService.getValidCameras().get(roverDTO.getRoverType()));
         if (!Boolean.TRUE.equals(roverDTO.getRememberPreferences()) && userId != null) {
             RoverDTO defaultRoverDto = createDefaultRoverDto(userId);
