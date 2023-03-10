@@ -18,6 +18,8 @@ import com.example.marsRoverPhotos.repository.PreferencesRepository;
 @ExtendWith(MockitoExtension.class)
 public class RoverServiceTest {
 
+    private static final String API_KEY = "4KyyHycAvnywP1DvJgKWjnJ7kc18GCygZTf9MpNr";
+
     @Mock
     private PreferencesRepository preferencesRepository;
 
@@ -37,7 +39,7 @@ public class RoverServiceTest {
     @Test
     public void testGetApiUrlEndpointsWithValidCamera() throws IllegalAccessException, InvocationTargetException {
         // Given
-        String expectedUrl = "https://api.nasa.gov/mars-photos/api/v1/rovers/Curiosity/photos?sol=1000&api_key=4KyyHycAvnywP1DvJgKWjnJ7kc18GCygZTf9MpNr&camera=MAST";
+        String expectedUrl = "https://api.nasa.gov/mars-photos/api/v1/rovers/Curiosity/photos?sol=1000&api_key="+API_KEY+"&camera=MAST";
 
         // When
         var urls = roverService.getApiUrlEndpoints(roverDTO);
