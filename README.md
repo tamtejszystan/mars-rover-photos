@@ -39,7 +39,7 @@ Navigate to the root directory of the project
 Start the application
 
 ```bash
-  mvn spring-boot:run
+  ./mvnw spring-boot:run
 ```
 
 Open a web browser and navigate to
