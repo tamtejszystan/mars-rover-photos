@@ -1,9 +1,19 @@
 let userId = getUrlParameter('userId')
+const form = document.getElementById('frmRoverType');
+const overlay = document.getElementById('loadingOverlay');
 
 function setUserId(userId) {
     localStorage.setItem('userId', userId);
     document.getElementById('userId').value = userId;
 }
+
+form.addEventListener('submit', () => {
+    overlay.classList.remove('d-none');
+});
+
+window.addEventListener('load', () => {
+    overlay.classList.add('d-none');
+});
 
 if (userId) {
     setUserId(userId);
