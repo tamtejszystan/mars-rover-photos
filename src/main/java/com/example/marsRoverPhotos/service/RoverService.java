@@ -5,6 +5,7 @@ import com.example.marsRoverPhotos.repository.PreferencesRepository;
 import com.example.marsRoverPhotos.response.MarsPhoto;
 import com.example.marsRoverPhotos.response.MarsRoverApiResponse;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,11 +14,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+@Slf4j
 @Service
 @Getter
 public class RoverService {
 
-    private static final String API_KEY = "4KyyHycAvnywP1DvJgKWjnJ7kc18GCygZTf9MpNr";
+    private static final String API_KEY = "yz4edKokjyteBhzPMC4WKxV3hIFsrhoniDAU0iry";
 
     private Map<String, List<String>> validCameras = new HashMap<>();
 
@@ -43,7 +45,7 @@ public class RoverService {
                 });
 
         resp.setPhotos(photos);
-
+        log.info("Rover API response number of photos: {}", resp.getPhotos().size());
         return resp;
     }
 
@@ -63,10 +65,11 @@ public class RoverService {
             if (method.getName().contains("getCamera") && Boolean.TRUE.equals(method.invoke(roverDTO))) {
                 String cameraName = method.getName().substring(9).toUpperCase();
                 if (validCameras.get(roverDTO.getRoverType()).contains(cameraName)) {
-                    urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + roverDTO.getRoverType() + "/photos?sol=" + roverDTO.getMarsSol() + "&api_key=" + API_KEY + "&camera=" + cameraName);
+                    urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + roverDTO.getRoverType().toLowerCase() + "/photos?sol=" + roverDTO.getMarsSol() + "&camera=" + cameraName.toLowerCase() + "&api_key=" + API_KEY );
                 }
             }
         }
+        log.info("URL={}", urls.toString());
         return urls;
     }
 

@@ -1,157 +1,122 @@
-<html lang="th">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Mars Rover Photos | Explore the Red Planet</title>
 
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"/>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"/>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
         }
     </style>
-
 </head>
 <body>
-<div class="container">
-    <h2 style="font-size: 2.5rem; font-weight: bold; text-align: center; color: #2c3e50;">Explore Mars with Rover Photos</h2>
+<div class="container py-4">
+    <h2 class="text-center fw-bold display-5 text-primary mb-4">Explore Mars with Rover Photos</h2>
 
-    <form method="post" action="" id="frmRoverType">
-        <input type="hidden" th:field="${roverDTO.roverType}"/>
-        <input type="hidden" th:field="${roverDTO.userId}"/>
+    <form method="post" th:action="@{/}" th:object="${roverDTO}" id="frmRoverType">
+        <input type="hidden" th:field="*{roverType}" id="roverType"/>
+        <input type="hidden" th:field="*{userId}"/>
         <input type="hidden" id="createUser" name="createUser" value="false"/>
 
-        <div class="btn-group btn-group-lg" role="group" style="margin: 2em 0em">
-            <button type="button" class="btn btn-secondary" id="roverTypeBtnCuriosity">Curiosity</button>
-            <button type="button" class="btn btn-secondary" id="roverTypeBtnOpportunity">Opportunity</button>
-            <button type="button" class="btn btn-secondary" id="roverTypeBtnSpirit">Spirit</button>
+        <div class="btn-group btn-group-lg w-100 mb-4" role="group">
+            <button type="button" class="btn btn-outline-secondary" id="roverTypeBtnCuriosity">Curiosity</button>
+            <button type="button" class="btn btn-outline-secondary" id="roverTypeBtnOpportunity">Opportunity</button>
+            <button type="button" class="btn btn-outline-secondary" id="roverTypeBtnSpirit">Spirit</button>
         </div>
 
-
-        <div class="row">
+        <!-- Camera check‑boxes -->
+        <div class="row g-3 mb-3">
             <div class="col-12 col-md-4">
                 <div class="form-check">
-
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraFhaz}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'FHAZ') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraFhaz1">
-                        Front Hazard Avoidance Camera
-                    </label>
+                    <input class="form-check-input" type="checkbox" id="cameraFhaz" th:field="*{cameraFhaz}" th:disabled="${!#lists.contains(validCameras, 'FHAZ')}"/>
+                    <label class="form-check-label" for="cameraFhaz">Front Hazard Avoidance Camera</label>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-check">
-
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraRhaz}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'RHAZ') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraRhaz1">
-                        Rear Hazard Avoidance Camera
-                    </label>
+                    <input class="form-check-input" type="checkbox" id="cameraRhaz" th:field="*{cameraRhaz}" th:disabled="${!#lists.contains(validCameras, 'RHAZ')}"/>
+                    <label class="form-check-label" for="cameraRhaz">Rear Hazard Avoidance Camera</label>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraMast}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'MAST') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraMast1">
-                        Mast Camera
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraChemcam}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'CHEMCAM') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraChemcam1">
-                        Chemistry and Camera Complex
-                    </label>
+                    <input class="form-check-input" type="checkbox" id="cameraMast" th:field="*{cameraMast}" th:disabled="${!#lists.contains(validCameras, 'MAST')}"/>
+                    <label class="form-check-label" for="cameraMast">Mast Camera</label>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraMahli}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'MAHLI') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraMahli1">
-                        Mars Hand Lens Imager
-                    </label>
+                    <input class="form-check-input" type="checkbox" id="cameraChemcam" th:field="*{cameraChemcam}" th:disabled="${!#lists.contains(validCameras, 'CHEMCAM')}"/>
+                    <label class="form-check-label" for="cameraChemcam">Chemistry &amp; Camera Complex</label>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraMardi}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'MARDI') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraMardi1">
-                        Mars Descent Imager
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraNavcam}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'NAVCAM') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraNavcam1">
-                        Navigation Camera
-                    </label>
+                    <input class="form-check-input" type="checkbox" id="cameraMahli" th:field="*{cameraMahli}" th:disabled="${!#lists.contains(validCameras, 'MAHLI')}"/>
+                    <label class="form-check-label" for="cameraMahli">Mars Hand Lens Imager</label>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraPancam}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'PANCAM') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraPancam1">
-                        Panoramic Camera
-                    </label>
+                    <input class="form-check-input" type="checkbox" id="cameraMardi" th:field="*{cameraMardi}" th:disabled="${!#lists.contains(validCameras, 'MARDI')}"/>
+                    <label class="form-check-label" for="cameraMardi">Mars Descent Imager</label>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" th:field="${roverDTO.cameraMinites}"
-                           th:attr="disabled=${!#lists.contains(validCameras, 'MINITES') ? 'disabled' : 'false'}">
-                    <label class="form-check-label" for="cameraMinites1">
-                        Miniature Thermal Emission Spectrometer (Mini-TES)
-                    </label>
+                    <input class="form-check-input" type="checkbox" id="cameraNavcam" th:field="*{cameraNavcam}" th:disabled="${!#lists.contains(validCameras, 'NAVCAM')}"/>
+                    <label class="form-check-label" for="cameraNavcam">Navigation Camera</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cameraPancam" th:field="*{cameraPancam}" th:disabled="${!#lists.contains(validCameras, 'PANCAM')}"/>
+                    <label class="form-check-label" for="cameraPancam">Panoramic Camera</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cameraMinites" th:field="*{cameraMinites}" th:disabled="${!#lists.contains(validCameras, 'MINITES')}"/>
+                    <label class="form-check-label" for="cameraMinites">Mini‑TES</label>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-form-label col-form-label-lg">Sol (Mars Day):</label>
-            <input class="form-control form-control-lg" type="number" th:field="${roverDTO.marsSol}" min="0"/>
+        <div class="mb-3">
+            <label for="marsSol" class="form-label fs-5">Sol (Mars day)</label>
+            <input class="form-control form-control-lg" id="marsSol" type="number" min="0" th:field="*{marsSol}"/>
         </div>
 
-        <div class="row">
-            <div class="col-3 col-md-2">
+        <div class="row align-items-center mb-4">
+            <div class="col-auto">
                 <button type="submit" class="btn btn-primary btn-lg">Submit</button>
             </div>
-            <div class="col-9 col-md-10" style="margin-top: 0.7em">
-                <input type="checkbox" th:field="${roverDTO.rememberPreferences}"/>
-                <label for="rememberPreferences1">Remember Preferences</label>
+            <div class="col-auto">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberPreferences" th:field="*{rememberPreferences}"/>
+                    <label class="form-check-label" for="rememberPreferences">Remember preferences</label>
+                </div>
             </div>
         </div>
     </form>
 
-    <div th:each="index : ${#numbers.sequence(0, roverData.photos.size(), 4)}" class="row" style="margin-bottom: 2em">
-        <div class="col" th:if="${index < roverData.photos.size()}">
-            <img th:src="${roverData.photos[index].imgSrc}" class="img-fluid"/>
-        </div>
-        <div class="col" th:if="${index+1 < roverData.photos.size()}">
-            <img th:src="${roverData.photos[index+1].imgSrc}" class="img-fluid"/>
-        </div>
-        <div class="col" th:if="${index+2 < roverData.photos.size()}">
-            <img th:src="${roverData.photos[index+2].imgSrc}" class="img-fluid"/>
-        </div>
-        <div class="col" th:if="${index+3 < roverData.photos.size()}">
-            <img th:src="${roverData.photos[index+3].imgSrc}" class="img-fluid"/>
+    <div th:if="${roverData != null}">
+        <div th:each="index : ${#numbers.sequence(0, roverData.photos.size() - 1, 4)}" class="row mb-4">
+            <div class="col" th:if="${index < roverData.photos.size()}"        ><img th:src="${roverData.photos[index].imgSrc}"     class="img-fluid rounded"/></div>
+            <div class="col" th:if="${index+1 < roverData.photos.size()}"    ><img th:src="${roverData.photos[index+1].imgSrc}" class="img-fluid rounded"/></div>
+            <div class="col" th:if="${index+2 < roverData.photos.size()}"    ><img th:src="${roverData.photos[index+2].imgSrc}" class="img-fluid rounded"/></div>
+            <div class="col" th:if="${index+3 < roverData.photos.size()}"    ><img th:src="${roverData.photos[index+3].imgSrc}" class="img-fluid rounded"/></div>
         </div>
     </div>
-
 </div>
-<script type="text/javascript" src="/js/index.js"></script>
+
+<script src="/js/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
